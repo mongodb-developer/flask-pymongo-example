@@ -10,8 +10,6 @@ from bson import json_util, ObjectId
 from datetime import datetime, timedelta
 
 from mflix.api.movies import movies_api_v1
-##from mflix.api.user import user_api_v1
-
 
 class MongoJsonEncoder(JSONEncoder):
     def default(self, obj):
