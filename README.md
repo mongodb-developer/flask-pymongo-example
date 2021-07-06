@@ -23,7 +23,7 @@ The main directory holds the following files:
 
 Clone the repository.
 ```
-git clone <REPO>
+git clone git@github.com:mongodb-developer/flask-pymongo-example.git
 ```
 
 Start a python virtual env:
