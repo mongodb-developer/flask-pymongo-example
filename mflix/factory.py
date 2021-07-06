@@ -34,20 +34,7 @@ def create_app():
     CORS(app)
     app.json_encoder = MongoJsonEncoder
     app.register_blueprint(movies_api_v1)
-    """ app.register_blueprint(user_api_v1)
-    jwt = JWTManager(app)
 
-    @jwt.user_claims_loader
-    def add_claims(identity):
-        return {
-            'user': identity,
-        }
-
-    app.config['JWT'] = jwt
-    app.config['BCRYPT'] = Bcrypt(app)
-    app.config['CLAIMS_LOADER'] = add_claims
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=30)
-    """
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
