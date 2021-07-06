@@ -13,11 +13,9 @@ from flask import current_app, g
 from werkzeug.local import LocalProxy
 from flask_pymongo import PyMongo
 import bson
-#from pymongo.write_concern import WriteConcern
 from pymongo.errors import DuplicateKeyError, OperationFailure
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
-#from pymongo.read_concern import ReadConcern
 
 
 def get_db():
@@ -25,7 +23,7 @@ def get_db():
     Configuration method to return db instance
     """
     db = getattr(g, "_database", None)
-   # MFLIX_DB_URI = current_app.config["MFLIX_DB_URI"]
+
     if db is None:
 
         """
