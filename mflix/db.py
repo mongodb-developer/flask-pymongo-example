@@ -7,12 +7,11 @@ docstrings with a short explanation of the task.
 
 Look out for TODO markers for additional help. Good luck!
 """
-
+import bson
 
 from flask import current_app, g
 from werkzeug.local import LocalProxy
 from flask_pymongo import PyMongo
-import bson
 from pymongo.errors import DuplicateKeyError, OperationFailure
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
