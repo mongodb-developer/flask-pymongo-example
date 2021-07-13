@@ -26,20 +26,6 @@ def get_db():
 
     if db is None:
 
-        """
-        Ticket: Connection Pooling
-
-        Please change the configuration of the MongoClient object by setting the
-        maximum connection pool size to 50 active connections.
-        """
-
-        """
-        Ticket: Timeouts
-
-        Please prevent the program from waiting indefinitely by setting the
-        write concern timeout limit to 2500 milliseconds.
-        """
-
         db = g._database = PyMongo(current_app).db
        
     return db
@@ -66,7 +52,6 @@ def get_movies_by_country(countries):
         match one or more values of a specific field.
         """
 
-        # TODO: Projection
         # Find movies matching the "countries" list, but only return the title
         # and _id. Do not include a limit in your own implementation, it is
         # included here to avoid sending 46000 documents down the wire.
@@ -132,20 +117,6 @@ def get_movies_faceted(filters, page, movies_per_page):
             }]
         }
     }
-
-    """
-    Ticket: Faceted Search
-
-    Please append the skip_stage, limit_stage, and facet_stage to the pipeline
-    (in that order).
-
-    The pipeline is a Python array, so you can use append() or extend() to
-    complete this task.
-    """
-
-    # TODO: Faceted Search
-    # Add the necessary stages to the pipeline variable in the correct order.
-    # pipeline.extend(...)
 
     try:
         movies = list(db.movies.aggregate(pipeline, allowDiskUse=True))[0]
@@ -215,19 +186,7 @@ def get_movies(filters, page, movies_per_page):
     total_num_movies = 0
     if page == 0:
         total_num_movies = db.movies.count_documents(query)
-    """
-    Ticket: Paging
-
-    Before this method returns back to the API, use the "movies_per_page"
-    argument to decide how many movies get displayed per page. The "page"
-    argument will decide which page
-
-    Paging can be implemented by using the skip() and limit() methods against
-    the Pymongo cursor.
-    """
-
-    # TODO: Paging
-    # Use the cursor to only return the movies that belong on the current page.
+ 
     movies = cursor.limit(movies_per_page)
 
     return (list(movies), total_num_movies)
@@ -241,18 +200,6 @@ def get_movie(id):
     """
     try:
 
-        """
-        Ticket: Get Comments
-
-        Please implement a $lookup stage in this pipeline to find all the
-        comments for the given movie. The movie_id in the `comments` collection
-        can be used to refer to the _id from the `movies` collection.
-
-        Embed the joined comments in a new field called "comments".
-        """
-
-        # TODO: Get Comments
-        # Implement the required pipeline.
         pipeline = [
             {
                 "$match": {
@@ -267,14 +214,6 @@ def get_movie(id):
     # TODO: Error Handling
     # If an invalid ID is passed to `get_movie`, it should return None.
     except (StopIteration) as _:
-
-        """
-        Ticket: Error Handling
-
-        Handle the InvalidId exception from the BSON library the same way as the
-        StopIteration exception is handled. Both exceptions should result in
-        `get_movie` returning None.
-        """
 
         return None
 
@@ -317,8 +256,7 @@ def add_comment(movie_id,name , email, comment, date):
 
     Name and email must be retrieved from the "user" object.
     """
-    # TODO: Create/Update Comments
-    # Construct the comment document to be inserted into MongoDB.
+    
     comment_doc = { 'movie_id' : movie_id, 'name' : name, 'email' : email,'text' : comment, 'date' : date}
     return db.comments.insert_one(comment_doc)
 
@@ -346,14 +284,5 @@ def delete_comment(comment_id, user_email):
     collection
     """
 
-    """
-    Ticket: Delete Comments
-
-    Match the comment_id and user_email with the correct fields, to make sure
-    this user has permission to delete this comment, and then delete it.
-    """
-
-    # TODO: Delete Comments
-    # Use the user_email and comment_id to delete the proper comment.
     response = db.comments.delete_one( { "_id": ObjectId(comment_id) } )
     return response
