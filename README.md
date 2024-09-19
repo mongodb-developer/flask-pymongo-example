@@ -69,7 +69,7 @@ cd flask-pymongo-example
 python3 -m venv mflix-venv
 
 # activate the virtual environment
-source mflix_venv/bin/activate
+source mflix-venv/bin/activate
 ```
 
 Install dependencies
