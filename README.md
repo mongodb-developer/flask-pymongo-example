@@ -74,10 +74,13 @@ source mflix_venv/bin/activate
 
 Install dependencies
 ```
-python3 -m pip install -r requirments.txt
+python3 -m pip install -r requirements.txt
 ```
 
 Rename the `sample_ini` to `.ini`.
+```
+mv sample_ini sample.ini
+```
 
 [Get your Atlas cluster](https://docs.atlas.mongodb.com/getting-started/) with [sample data](https://docs.atlas.mongodb.com/sample-data/) set [connection string](https://docs.atlas.mongodb.com/connect-to-cluster/) and place in `DB_URI` parameter under `.ini`
 
