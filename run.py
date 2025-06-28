@@ -1,16 +1,22 @@
-
 from mflix.factory import create_app
+from configparser import ConfigParser
+from mflix.db import init_app as init_db
 
-import os
-import configparser
+# Load MongoDB URI from sample.ini
+config = ConfigParser()
+config.read("sample.ini")
 
-
-config = configparser.ConfigParser()
-config.read(os.path.abspath(os.path.join(".ini")))
+mongo_uri = config["APP"]["DB_URI"]  # Make sure your [APP] section exists
 
 if __name__ == "__main__":
-    app = create_app()
-    app.config['DEBUG'] = True
-    app.config['MONGO_URI'] = config['PROD']['DB_URI']
+    # Create the app with injected config
+    app = create_app({
+        "DEBUG": True,
+        "MONGO_URI": mongo_uri
+    })
 
+    # Initialize DB connection
+    init_db(app)
+
+    # Run the app
     app.run()
